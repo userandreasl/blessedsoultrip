@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfil de Instagram | Blessed Soul Trip</title>
+  <style>
+    :root {
+      --bg: #0f0f13;
+      --panel: #17171d;
+      --text: #f5f7ff;
+      --muted: #b8bfd6;
+      --line: #2b2f3d;
+      --accent-1: #ff2d95;
+      --accent-2: #ff7a00;
+      --accent-3: #7d4dff;
+      --ok: #41d1a3;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background:
+        radial-gradient(1000px 600px at 15% -10%, rgba(255,122,0,.25), transparent 40%),
+        radial-gradient(900px 500px at 85% -20%, rgba(125,77,255,.25), transparent 45%),
+        var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: min(960px, 100%);
+      background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: 0 20px 80px rgba(0, 0, 0, .45);
+      transform: translateY(18px);
+      opacity: 0;
+      animation: enter .75s ease forwards;
+    }
+
+    @keyframes enter {
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .cover {
+      height: 220px;
+      background:
+        linear-gradient(135deg, rgba(255,45,149,.85), rgba(255,122,0,.85) 50%, rgba(125,77,255,.85));
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cover::after {
+      content: "";
+      position: absolute;
+      inset: -40% -20%;
+      background: radial-gradient(circle at 30% 40%, rgba(255,255,255,.35), transparent 30%);
+      animation: shimmer 8s linear infinite;
+      opacity: .6;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-8%) rotate(0deg); }
+      50% { transform: translateX(8%) rotate(8deg); }
+      100% { transform: translateX(-8%) rotate(0deg); }
+    }
+
+    .header {
+      display: flex;
+      gap: 24px;
+      padding: 0 28px 26px;
+      margin-top: -54px;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      border: 4px solid var(--panel);
+      background: #fff;
+      object-fit: cover;
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      transition: transform .35s ease;
+    }
+
+    .avatar:hover { transform: scale(1.04) rotate(-2deg); }
+
+    .identity {
+      flex: 1;
+      min-width: 250px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .identity-top {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.25rem, 2vw, 1.7rem);
+      font-weight: 700;
+      letter-spacing: .2px;
+    }
+
+    .verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(65, 209, 163, .18);
+      color: #7effd0;
+      border: 1px solid rgba(126,255,208,.35);
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: .82rem;
+      font-weight: 600;
+    }
+
+    .bio {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.5;
+      max-width: 60ch;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px 14px;
+      text-align: center;
+      transition: transform .25s ease, border-color .25s ease;
+    }
+
+    .stat:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255,122,0,.5);
+    }
+
+    .value { display: block; font-weight: 800; font-size: 1.05rem; }
+    .label { color: var(--muted); font-size: .9rem; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      padding: 0 28px 24px;
+    }
+
+    .btn {
+      appearance: none;
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform .2s ease, filter .2s ease;
+    }
+
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.08); }
+    .btn-pri {
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+    }
+    .btn-sec {
+      color: var(--text);
+      background: #232734;
+      border: 1px solid var(--line);
+    }
+
+    .highlights {
+      border-top: 1px solid var(--line);
+      padding: 20px 28px 26px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: .92rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--muted);
+    }
+
+    .stories {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+    }
+
+    .story {
+      min-width: 84px;
+      text-align: center;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .ring {
+      width: 74px;
+      height: 74px;
+      border-radius: 50%;
+      margin: 0 auto 7px;
+      background:
+        linear-gradient(var(--bg), var(--bg)) padding-box,
+        linear-gradient(135deg, var(--accent-1), var(--accent-2), var(--accent-3)) border-box;
+      border: 2px solid transparent;
+      display: grid;
+      place-items: center;
+      transition: transform .3s ease;
+    }
+
+    .story:hover .ring { transform: scale(1.06) rotate(3deg); }
+
+    .ring span {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: #202431;
+      color: #fff;
+      font-size: .8rem;
+      font-weight: 700;
+    }
+
+    .gallery {
+      border-top: 1px solid var(--line);
+      padding: 20px 28px 30px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 10px;
+    }
+
+    .tile {
+      aspect-ratio: 1 / 1;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      background: linear-gradient(135deg, #252a38, #1a1d27);
+      position: relative;
+      transition: transform .25s ease;
+    }
+
+    .tile:hover { transform: scale(1.02); }
+
+    .tile::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 70% 20%, rgba(255,255,255,.22), transparent 30%);
+    }
+
+    .tile span {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      background: rgba(15,15,19,.72);
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 999px;
+      padding: 4px 9px;
+      font-size: .75rem;
+      color: #e9ecff;
+    }
+
+    @media (max-width: 700px) {
+      .cover { height: 160px; }
+      .header { margin-top: -44px; padding: 0 16px 18px; gap: 14px; }
+      .avatar { width: 94px; height: 94px; }
+      .stats { grid-template-columns: 1fr; }
+      .actions, .highlights, .gallery { padding-left: 16px; padding-right: 16px; }
+      .grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="card" aria-label="Perfil de Instagram">
+    <div class="cover" role="img" aria-label="Fondo visual degradado estilo Instagram"></div>
+
+    <header class="header">
+      <!-- Remplaza "logo.png" por el archivo de logo que recibiste. -->
+      <img class="avatar" src="logo.png" alt="Logo de Blessed Soul Trip" />
+
+      <section class="identity">
+        <div class="identity-top">
+          <h1>@blessedsoultrip</h1>
+          <span class="verified">Cuenta oficial</span>
+        </div>
+
+        <p class="bio">
+          Viajes conscientes, energía positiva y experiencias inolvidables.
+          Únete a nuestra comunidad para descubrir rutas, consejos y aventuras por el mundo.
+        </p>
+
+        <div class="stats" aria-label="Estadísticas de la cuenta">
+          <article class="stat"><span class="value">128</span><span class="label">Publicaciones</span></article>
+          <article class="stat"><span class="value">24,8 mil</span><span class="label">Seguidores</span></article>
+          <article class="stat"><span class="value">312</span><span class="label">Seguidos</span></article>
+        </div>
+      </section>
+    </header>
+
+    <section class="actions" aria-label="Acciones del perfil">
+      <button class="btn btn-pri" type="button">Seguir</button>
+      <button class="btn btn-sec" type="button">Enviar mensaje</button>
+      <button class="btn btn-sec" type="button">Compartir perfil</button>
+    </section>
+
+    <section class="highlights" aria-label="Historias destacadas">
+      <h2 class="section-title">Historias destacadas</h2>
+      <div class="stories">
+        <div class="story"><div class="ring"><span>MX</span></div>México</div>
+        <div class="story"><div class="ring"><span>PE</span></div>Perú</div>
+        <div class="story"><div class="ring"><span>ES</span></div>España</div>
+        <div class="story"><div class="ring"><span>CR</span></div>Costa Rica</div>
+        <div class="story"><div class="ring"><span>Tips</span></div>Consejos</div>
+      </div>
+    </section>
+
+    <section class="gallery" aria-label="Galería de publicaciones">
+      <h2 class="section-title">Publicaciones recientes</h2>
+      <div class="grid">
+        <article class="tile"><span>Aventura</span></article>
+        <article class="tile"><span>Bienestar</span></article>
+        <article class="tile"><span>Retiro</span></article>
+        <article class="tile"><span>Naturaleza</span></article>
+        <article class="tile"><span>Comunidad</span></article>
+        <article class="tile"><span>Momentos</span></article>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
